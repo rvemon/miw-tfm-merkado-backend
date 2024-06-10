@@ -1,2 +1,3 @@
-# miw-tfm-merkado
-Trabajo de fin de master MIW
+# miw-tfm-merkado-backend
+Trabajo de fin de master MIW 
+Backend usando Spring Boot
