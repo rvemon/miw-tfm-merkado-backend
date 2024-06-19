@@ -1,0 +1,32 @@
+package upm.tfm.rvm.merkado_api.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import upm.tfm.rvm.merkado_api.data.PlannerEntity;
+import upm.tfm.rvm.merkado_api.data.PlannerRepository;
+
+import java.util.stream.Stream;
+
+@Service
+public class PlannerService {
+    private PlannerRepository plannerRepository;
+
+    @Autowired
+    public PlannerService(PlannerRepository plannerRepository){
+        this.plannerRepository = plannerRepository;
+    }
+
+    public Stream<PlannerEntity> findAllByUserId(String userId) {
+        return this.plannerRepository.findAll().stream()
+                .filter(planner -> userId.equals(planner.getUserId()));
+    }
+
+    public PlannerEntity getOne(String id){
+        return this.plannerRepository.getOne(id);
+    }
+
+    public PlannerEntity save(PlannerEntity plannerEntity){
+        return this.plannerRepository.save(plannerEntity);
+    }
+
+}
