@@ -21,7 +21,7 @@ import java.util.stream.Stream;
 @RestController
 @RequestMapping
 public class MealResource {
-    static final String MEAL = "/daily-menus";
+    static final String MEAL = "/meals";
     static final String MEAL_BY_USERID = "/userid/{id}";
     static final String ID_ID = "/{id}";
 

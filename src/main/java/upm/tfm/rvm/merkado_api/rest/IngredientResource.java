@@ -2,22 +2,17 @@ package upm.tfm.rvm.merkado_api.rest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import upm.tfm.rvm.merkado_api.data.DailyMenuEntity;
 import upm.tfm.rvm.merkado_api.data.IngredientEntity;
-import upm.tfm.rvm.merkado_api.data.MealEntity;
-import upm.tfm.rvm.merkado_api.rest.dtos.DailyMenu;
 import upm.tfm.rvm.merkado_api.rest.dtos.Ingredient;
-import upm.tfm.rvm.merkado_api.rest.dtos.Meal;
 import upm.tfm.rvm.merkado_api.service.IngredientService;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @RestController
 public class IngredientResource {
-    static final String INGREDIENT = "/daily-menus";
+    static final String INGREDIENT = "/ingredients";
     static final String INGREDIENT_BY_USERID = "/userid/{id}";
     static final String ID_ID = "/{id}";
 
