@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 import upm.tfm.rvm.merkado_api.data.DailyMenuEntity;
 import upm.tfm.rvm.merkado_api.data.DailyMenuRepository;
 
+import java.util.List;
+
 @Service
 public class DailyMenuService {
     private DailyMenuRepository dailyMenuRepository;
@@ -12,6 +14,10 @@ public class DailyMenuService {
     @Autowired
     public DailyMenuService(DailyMenuRepository dailyMenuRepository){
         this.dailyMenuRepository = dailyMenuRepository;
+    }
+
+    public List<DailyMenuEntity> findAll(){
+        return this.dailyMenuRepository.findAll();
     }
 
     public DailyMenuEntity getOne(String id){

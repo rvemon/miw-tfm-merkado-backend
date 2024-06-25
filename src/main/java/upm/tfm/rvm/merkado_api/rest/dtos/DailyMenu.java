@@ -4,7 +4,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.beans.BeanUtils;
 import upm.tfm.rvm.merkado_api.data.DailyMenuEntity;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class DailyMenu {
     private String id;
@@ -12,15 +14,25 @@ public class DailyMenu {
     private String userId;
     private String day;
 
+    private LocalDate creationDate;
+
     @JsonIgnore
     private List<Planner> plannersIn;
+
+    private List<Meal> meals;
 
     public DailyMenu(){
 
     }
 
     public DailyMenu(DailyMenuEntity dailyMenuEntity){
-        BeanUtils.copyProperties(dailyMenuEntity, this, "plannersIn");
+        BeanUtils.copyProperties(
+                dailyMenuEntity,
+                this,
+                "plannersIn", "meals");
+        this.setMeals(dailyMenuEntity.getMealEntities().stream()
+                .map(Meal::new)
+                .collect(Collectors.toList()));
     }
 
     public String getId() {
@@ -63,12 +75,31 @@ public class DailyMenu {
         this.day = day;
     }
 
+    public List<Meal> getMeals() {
+        return meals;
+    }
+
+    public void setMeals(List<Meal> meals) {
+        this.meals = meals;
+    }
+
+    public LocalDate getCreationDate() {
+        return creationDate;
+    }
+
+    public void setCreationDate(LocalDate creationDate) {
+        this.creationDate = creationDate;
+    }
+
     @Override
     public String toString() {
-        return "DailyMenu{" +
+        return "{" +
                 "id='" + id + '\'' +
                 ", name='" + name + '\'' +
                 ", userId='" + userId + '\'' +
+                ", day='" + day + '\'' +
+                ", creationDate='" + creationDate + '\'' +
+                ", meals='" + meals +
                 '}';
     }
 

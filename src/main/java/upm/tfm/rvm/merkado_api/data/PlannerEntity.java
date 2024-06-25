@@ -29,8 +29,8 @@ public class PlannerEntity {
 
     }
 
-    public PlannerEntity(String userId, String name, String description, List<DailyMenuEntity> dailyMenuEntities,
-                         LocalDate creationDate) {
+    public PlannerEntity(String userId, String name, String description,
+                         List<DailyMenuEntity> dailyMenuEntities, LocalDate creationDate){
         this.id = UUID.randomUUID().toString();
         this.userId = userId;
         this.name = name;

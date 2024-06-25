@@ -20,7 +20,7 @@ public class MealIngredientEntity {
     @JoinColumn(name = "ingredient_id")
     private IngredientEntity ingredient;
 
-    private int quantity;
+    private Integer quantity;
 
     public MealIngredientId getId() {
         return id;
@@ -46,11 +46,11 @@ public class MealIngredientEntity {
         this.ingredient = ingredient;
     }
 
-    public int getQuantity() {
+    public Integer getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(int quantity) {
+    public void setQuantity(Integer quantity) {
         this.quantity = quantity;
     }
 }
@@ -64,5 +64,19 @@ class MealIngredientId implements Serializable {
     @Column(name = "ingredient_id")
     private String ingredientId;
 
-    // Getters, setters, equals, and hashCode
+    public String getMealId() {
+        return mealId;
+    }
+
+    public void setMealId(String mealId) {
+        this.mealId = mealId;
+    }
+
+    public String getIngredientId() {
+        return ingredientId;
+    }
+
+    public void setIngredientId(String ingredientId) {
+        this.ingredientId = ingredientId;
+    }
 }
