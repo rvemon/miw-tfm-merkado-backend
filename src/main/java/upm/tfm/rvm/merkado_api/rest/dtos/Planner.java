@@ -18,6 +18,16 @@ public class Planner {
     public Planner(){
 
     }
+
+    public Planner(String userId, String name, String description,
+                   LocalDate creationDate, List<DailyMenu> dailyMenus) {
+        this.userId = userId;
+        this.name = name;
+        this.description = description;
+        this.creationDate = creationDate;
+        this.dailyMenus = dailyMenus;
+    }
+
     public Planner(PlannerEntity plannerEntity){
         BeanUtils.copyProperties(plannerEntity, this, "dailyMenuEntities");
         this.setDailyMenus(
