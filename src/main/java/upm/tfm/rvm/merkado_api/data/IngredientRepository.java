@@ -1,4 +1,6 @@
 package upm.tfm.rvm.merkado_api.data;
 
-public interface IngredientRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface IngredientRepository extends JpaRepository<IngredientEntity, String> {
 }

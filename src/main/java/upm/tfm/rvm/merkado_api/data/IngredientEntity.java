@@ -2,12 +2,13 @@ package upm.tfm.rvm.merkado_api.data;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
+@Entity
+@Table(name="ingredient")
 public class IngredientEntity {
 
     @Id
@@ -18,17 +19,17 @@ public class IngredientEntity {
     private LocalDate creationDate;
 
     @JsonIgnore
-    @ManyToMany(
-            mappedBy = "mealIngredients"
+    @OneToMany(
+            mappedBy = "ingredient"
     )
-    private List<MealEntity> mealEntities;
+    private List<MealIngredientEntity> mealEntities;
 
     public IngredientEntity(){
 
     }
 
     public IngredientEntity(String name, String ingredientType, String measurement,
-                            LocalDate creationDate, List<MealEntity> mealEntities) {
+                            LocalDate creationDate, List<MealIngredientEntity> mealEntities) {
         this.id = UUID.randomUUID().toString();
         this.name = name;
         this.ingredientType = ingredientType;
@@ -77,11 +78,11 @@ public class IngredientEntity {
         this.creationDate = creationDate;
     }
 
-    public List<MealEntity> getMealEntities() {
+    public List<MealIngredientEntity> getMealEntities() {
         return mealEntities;
     }
 
-    public void setMealEntities(List<MealEntity> mealEntities) {
+    public void setMealEntities(List<MealIngredientEntity> mealEntities) {
         this.mealEntities = mealEntities;
     }
 }

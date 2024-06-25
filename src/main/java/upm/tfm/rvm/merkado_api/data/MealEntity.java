@@ -2,14 +2,13 @@ package upm.tfm.rvm.merkado_api.data;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
+@Entity
+@Table(name="meal")
 public class MealEntity {
 
     @Id
@@ -25,13 +24,10 @@ public class MealEntity {
     )
     private List<DailyMenuEntity> dailyMenuEntities;
 
-    @ManyToMany
-    @JoinTable(
-            name="meal_ingredients",
-            joinColumns = @JoinColumn(name="meal_id"),
-            inverseJoinColumns = @JoinColumn(name = "ingredient_id")
+    @OneToMany(
+            mappedBy = "meal"
     )
-    private List<IngredientEntity> mealIngredients;
+    private List<MealIngredientEntity> mealIngredients;
 
 
     public MealEntity(){
@@ -39,7 +35,7 @@ public class MealEntity {
     }
 
     public MealEntity(String userId, String name, String category, LocalDate creationDate,
-                      List<DailyMenuEntity> dailyMenuEntities, List<IngredientEntity> mealIngredients) {
+                      List<DailyMenuEntity> dailyMenuEntities, List<MealIngredientEntity> mealIngredients) {
         this.id = UUID.randomUUID().toString();
         this.userId = userId;
         this.name = name;
@@ -96,11 +92,11 @@ public class MealEntity {
         this.dailyMenuEntities = dailyMenuEntities;
     }
 
-    public List<IngredientEntity> getMealIngredients() {
+    public List<MealIngredientEntity> getMealIngredients() {
         return mealIngredients;
     }
 
-    public void setMealIngredients(List<IngredientEntity> mealIngredients) {
+    public void setMealIngredients(List<MealIngredientEntity> mealIngredients) {
         this.mealIngredients = mealIngredients;
     }
 }
