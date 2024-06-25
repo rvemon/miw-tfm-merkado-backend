@@ -10,6 +10,7 @@ public class DailyMenu {
     private String id;
     private String name;
     private String userId;
+    private String day;
 
     @JsonIgnore
     private List<Planner> plannersIn;
@@ -54,6 +55,14 @@ public class DailyMenu {
         this.plannersIn = plannersIn;
     }
 
+    public String getDay() {
+        return day;
+    }
+
+    public void setDay(String day) {
+        this.day = day;
+    }
+
     @Override
     public String toString() {
         return "DailyMenu{" +
@@ -62,4 +71,6 @@ public class DailyMenu {
                 ", userId='" + userId + '\'' +
                 '}';
     }
+
+
 }

@@ -29,4 +29,24 @@ public class PlannerService {
         return this.plannerRepository.save(plannerEntity);
     }
 
+    public void delete(String plannerId){
+        PlannerEntity planner = this.plannerRepository.findById(plannerId).orElse(null);
+        if(planner != null){
+            this.plannerRepository.delete(planner);
+        }
+    }
+
+    public PlannerEntity update(PlannerEntity plannerEntity){
+        PlannerEntity planner = this.plannerRepository.findById(plannerEntity.getId()).orElse(null);
+        if(planner!=null){
+            planner.setName(plannerEntity.getName());
+            planner.setDescription(plannerEntity.getDescription());
+            planner.setDailyMenuEntities(plannerEntity.getDailyMenuEntities());
+            this.plannerRepository.save(planner);
+            return planner;
+        }
+        return null;
+    }
+
+    //TODO shopping list
 }

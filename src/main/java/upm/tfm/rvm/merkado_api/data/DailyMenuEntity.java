@@ -16,6 +16,7 @@ public class DailyMenuEntity {
     private String id;
     private String userId;
     private String name;
+    private String day;
     private LocalDate creationDate;
 
     @JsonIgnore
@@ -36,13 +37,14 @@ public class DailyMenuEntity {
 
     }
     public DailyMenuEntity(String userId, String name, List<PlannerEntity> plannerEntities,
-                           List<MealEntity> mealEntities, LocalDate creationDate) {
+                           List<MealEntity> mealEntities, LocalDate creationDate, String day) {
         this.id = UUID.randomUUID().toString();
         this.userId = userId;
         this.name = name;
         this.plannerEntities = plannerEntities;
         this.mealEntities = mealEntities;
         this.creationDate = creationDate;
+        this.day = day;
     }
 
     public String getId() {
@@ -91,5 +93,13 @@ public class DailyMenuEntity {
 
     public void setMealEntities(List<MealEntity> mealEntities) {
         this.mealEntities = mealEntities;
+    }
+
+    public String getDay() {
+        return day;
+    }
+
+    public void setDay(String day) {
+        this.day = day;
     }
 }

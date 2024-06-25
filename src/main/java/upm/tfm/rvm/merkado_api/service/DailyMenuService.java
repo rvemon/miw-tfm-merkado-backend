@@ -21,4 +21,23 @@ public class DailyMenuService {
     public DailyMenuEntity save(DailyMenuEntity dailyMenu) {
         return this.dailyMenuRepository.save(dailyMenu);
     }
+
+    public void delete(String dailyMenuId){
+        DailyMenuEntity dailyMenu = this.dailyMenuRepository.findById(dailyMenuId).orElse(null);
+        if(dailyMenu!=null){
+            this.dailyMenuRepository.delete(dailyMenu);
+        }
+    }
+
+    public DailyMenuEntity update(DailyMenuEntity dailyMenuEntity){
+        DailyMenuEntity dailyMenu = this.dailyMenuRepository.findById(dailyMenuEntity.getId()).orElse(null);
+        if(dailyMenu!=null){
+            dailyMenu.setName(dailyMenuEntity.getName());
+            dailyMenu.setDay(dailyMenuEntity.getDay());
+            dailyMenu.setMealEntities(dailyMenuEntity.getMealEntities());
+            this.dailyMenuRepository.save(dailyMenu);
+            return dailyMenu;
+        }
+        return null;
+    }
 }
