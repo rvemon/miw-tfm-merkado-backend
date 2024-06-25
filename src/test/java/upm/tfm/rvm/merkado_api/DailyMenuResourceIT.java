@@ -6,10 +6,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 public class DailyMenuResourceIT {
 
-
-
     @Test
-    void create(){
+    void testCreate(){
         assert true;
     }
 
@@ -19,27 +17,24 @@ public class DailyMenuResourceIT {
     }
 
     @Test
-    void testGetDailyMenuList(){
+    void testGetMealList(){
         assert true;
     }
 
     @Test
-    void testGetPlannerById(){
+    void getDailyMenuById(){
         assert true;
     }
 
     @Test
-    void update(){
+    void testUpdate(){
         assert true;
     }
 
     @Test
-    void delete(){
+    void testDelete(){
         assert true;
     }
+    
 
-    @Test
-    void testTest(){
-        assert true;
-    }
 }

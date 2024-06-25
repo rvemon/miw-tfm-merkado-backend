@@ -48,7 +48,7 @@ public class IngredientResource {
     }
 
     @GetMapping(ID_ID)
-    public Ingredient getDailyMenuById(@PathVariable  String id){
+    public Ingredient getIngredientById(@PathVariable  String id){
         IngredientEntity ingredientEntity= this.ingredientService.getOne(id);
         if(ingredientEntity!=null){
             return new Ingredient(ingredientEntity);
