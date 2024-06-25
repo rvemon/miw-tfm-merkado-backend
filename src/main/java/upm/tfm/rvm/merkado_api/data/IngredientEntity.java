@@ -39,6 +39,7 @@ public class IngredientEntity {
         this.creationDate = creationDate;
         this.mealEntities = mealEntities;
         this.userId = userId;
+
     }
 
     public String getId() {

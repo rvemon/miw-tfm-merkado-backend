@@ -31,7 +31,6 @@ public class MealEntity {
 
 
     public MealEntity(){
-
     }
 
     public MealEntity(String userId, String name, String category, LocalDate creationDate,
