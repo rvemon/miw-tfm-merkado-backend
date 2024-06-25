@@ -44,6 +44,7 @@ public class MealEntity {
         this.dailyMenuEntities = dailyMenuEntities;
         this.mealIngredients = mealIngredients;
     }
+
     public String getId() {
         return id;
     }
