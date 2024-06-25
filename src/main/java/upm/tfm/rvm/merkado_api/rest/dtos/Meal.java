@@ -1,12 +1,14 @@
 package upm.tfm.rvm.merkado_api.rest.dtos;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Getter;
 import org.springframework.beans.BeanUtils;
 import upm.tfm.rvm.merkado_api.data.MealEntity;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Getter
 public class Meal {
     private String id;
     private String userId;
@@ -29,48 +31,24 @@ public class Meal {
                 .collect(Collectors.toList()));
     }
 
-    public String getId() {
-        return id;
-    }
-
     public void setId(String id) {
         this.id = id;
-    }
-
-    public String getUserId() {
-        return userId;
     }
 
     public void setUserId(String userId) {
         this.userId = userId;
     }
 
-    public String getName() {
-        return name;
-    }
-
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getCategory() {
-        return category;
     }
 
     public void setCategory(String category) {
         this.category = category;
     }
 
-    public List<DailyMenu> getMenusIn() {
-        return menusIn;
-    }
-
     public void setMenusIn(List<DailyMenu> menusIn) {
         this.menusIn = menusIn;
-    }
-
-    public List<MealIngredient> getIngredients() {
-        return ingredients;
     }
 
     public void setIngredients(List<MealIngredient> ingredients) {

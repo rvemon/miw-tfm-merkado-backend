@@ -1,12 +1,14 @@
 package upm.tfm.rvm.merkado_api.data;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Getter;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
+@Getter
 @Entity
 @Table(name="daily_menu")
 public class DailyMenuEntity {
@@ -46,56 +48,28 @@ public class DailyMenuEntity {
         this.day = day;
     }
 
-    public String getId() {
-        return id;
-    }
-
     public void setId(String id) {
         this.id = id;
-    }
-
-    public String getUserId() {
-        return userId;
     }
 
     public void setUserId(String userId) {
         this.userId = userId;
     }
 
-    public String getName() {
-        return name;
-    }
-
     public void setName(String name) {
         this.name = name;
-    }
-
-    public List<PlannerEntity> getPlannerEntities() {
-        return plannerEntities;
     }
 
     public void setPlannerEntities(List<PlannerEntity> plannerEntities) {
         this.plannerEntities = plannerEntities;
     }
 
-    public LocalDate getCreationDate() {
-        return creationDate;
-    }
-
     public void setCreationDate(LocalDate creationDate) {
         this.creationDate = creationDate;
     }
 
-    public List<MealEntity> getMealEntities() {
-        return mealEntities;
-    }
-
     public void setMealEntities(List<MealEntity> mealEntities) {
         this.mealEntities = mealEntities;
-    }
-
-    public String getDay() {
-        return day;
     }
 
     public void setDay(String day) {

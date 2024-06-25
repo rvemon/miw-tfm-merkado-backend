@@ -1,10 +1,13 @@
 package upm.tfm.rvm.merkado_api.data;
 
+import lombok.Getter;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
+@Getter
 @Entity
 @Table(name="planner")
 public class PlannerEntity {
@@ -38,48 +41,24 @@ public class PlannerEntity {
         this.creationDate = creationDate;
     }
 
-    public LocalDate getCreationDate() {
-        return creationDate;
-    }
-
     public void setCreationDate(LocalDate creationDate) {
         this.creationDate = creationDate;
-    }
-
-    public String getId() {
-        return id;
     }
 
     public void setId(String id) {
         this.id = id;
     }
 
-    public String getUserId() {
-        return userId;
-    }
-
     public void setUserId(String userId) {
         this.userId = userId;
-    }
-
-    public String getName() {
-        return name;
     }
 
     public void setName(String name) {
         this.name = name;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public List<DailyMenuEntity> getDailyMenuEntities() {
-        return dailyMenuEntities;
     }
 
     public void setDailyMenuEntities(List<DailyMenuEntity> dailyMenuEntities) {

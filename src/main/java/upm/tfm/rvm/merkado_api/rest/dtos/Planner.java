@@ -1,5 +1,6 @@
 package upm.tfm.rvm.merkado_api.rest.dtos;
 
+import lombok.Getter;
 import org.springframework.beans.BeanUtils;
 import upm.tfm.rvm.merkado_api.data.PlannerEntity;
 
@@ -7,6 +8,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Getter
 public class Planner {
     private String id;
     private String userId;
@@ -41,14 +43,6 @@ public class Planner {
         this.dailyMenus = dailyMenus;
     }
 
-    public String getId() {
-        return id;
-    }
-
-    public LocalDate getCreationDate() {
-        return creationDate;
-    }
-
     public void setCreationDate(LocalDate creationDate) {
         this.creationDate = creationDate;
     }
@@ -57,32 +51,16 @@ public class Planner {
         this.id = id;
     }
 
-    public String getUserId() {
-        return userId;
-    }
-
     public void setUserId(String userId) {
         this.userId = userId;
-    }
-
-    public String getName() {
-        return name;
     }
 
     public void setName(String name) {
         this.name = name;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public List<DailyMenu> getDailyMenus() {
-        return dailyMenus;
     }
 
     @Override

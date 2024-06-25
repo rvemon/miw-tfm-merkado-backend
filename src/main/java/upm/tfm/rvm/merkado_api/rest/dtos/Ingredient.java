@@ -1,6 +1,7 @@
 package upm.tfm.rvm.merkado_api.rest.dtos;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Getter;
 import org.springframework.beans.BeanUtils;
 import upm.tfm.rvm.merkado_api.data.IngredientEntity;
 import upm.tfm.rvm.merkado_api.data.MealIngredientEntity;
@@ -8,6 +9,7 @@ import upm.tfm.rvm.merkado_api.data.MealIngredientEntity;
 import java.time.LocalDate;
 import java.util.List;
 
+@Getter
 public class Ingredient {
     private String id;
 
@@ -27,44 +29,20 @@ public class Ingredient {
         BeanUtils.copyProperties(ingredientEntity, this,"mealsIn");
     }
 
-    public String getId() {
-        return id;
-    }
-
     public void setId(String id) {
         this.id = id;
-    }
-
-    public String getName() {
-        return name;
     }
 
     public void setName(String name) {
         this.name = name;
     }
 
-    public String getIngredientType() {
-        return ingredientType;
-    }
-
     public void setIngredientType(String ingredientType) {
         this.ingredientType = ingredientType;
     }
 
-    public String getMeasurement() {
-        return measurement;
-    }
-
     public void setMeasurement(String measurement) {
         this.measurement = measurement;
-    }
-
-    public LocalDate getCreationDate() {
-        return creationDate;
-    }
-
-    public String getUserId() {
-        return userId;
     }
 
     public void setUserId(String userId) {
@@ -73,10 +51,6 @@ public class Ingredient {
 
     public void setCreationDate(LocalDate creationDate) {
         this.creationDate = creationDate;
-    }
-
-    public List<MealIngredientEntity> getMealsIn() {
-        return mealsIn;
     }
 
     public void setMealsIn(List<MealIngredientEntity> mealsIn) {
