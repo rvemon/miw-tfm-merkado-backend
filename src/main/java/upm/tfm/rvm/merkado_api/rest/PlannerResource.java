@@ -9,6 +9,7 @@ import upm.tfm.rvm.merkado_api.rest.dtos.PlannerDailyMenu;
 import upm.tfm.rvm.merkado_api.service.DailyMenuService;
 import upm.tfm.rvm.merkado_api.service.PlannerService;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -51,9 +52,11 @@ public class PlannerResource {
     public String test(){
 
         PlannerEntity planner =
-                new PlannerEntity("1","planner 2", "descripcion planner 1", null);
+                new PlannerEntity("1","planner 2",
+                        "descripcion planner 1", null, LocalDate.now());
 
-        DailyMenuEntity dailyMenu = new DailyMenuEntity("1", "daily menu 2", null);
+        DailyMenuEntity dailyMenu = new DailyMenuEntity("1", "daily menu 2",
+                null, null, LocalDate.now());
         plannerService.save(planner);
         dailyMenuService.save(dailyMenu);
         return "test";

@@ -1,6 +1,8 @@
 package upm.tfm.rvm.merkado_api.data;
 
 import javax.persistence.*;
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -13,6 +15,7 @@ public class PlannerEntity {
     private String userId;
     private String name;
     private String description;
+    private LocalDate creationDate;
 
     @ManyToMany
     @JoinTable(
@@ -26,12 +29,22 @@ public class PlannerEntity {
 
     }
 
-    public PlannerEntity(String userId, String name, String description, List<DailyMenuEntity> dailyMenuEntities) {
-        this.id = this.id = UUID.randomUUID().toString();
+    public PlannerEntity(String userId, String name, String description, List<DailyMenuEntity> dailyMenuEntities,
+                         LocalDate creationDate) {
+        this.id = UUID.randomUUID().toString();
         this.userId = userId;
         this.name = name;
         this.description = description;
         this.dailyMenuEntities = dailyMenuEntities;
+        this.creationDate = creationDate;
+    }
+
+    public LocalDate getCreationDate() {
+        return creationDate;
+    }
+
+    public void setCreationDate(LocalDate creationDate) {
+        this.creationDate = creationDate;
     }
 
     public String getId() {

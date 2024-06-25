@@ -2,47 +2,39 @@ package upm.tfm.rvm.merkado_api.data;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import javax.persistence.*;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
-@Entity
-@Table(name="daily_menu")
-public class DailyMenuEntity {
+public class IngredientEntity {
 
     @Id
     private String id;
-    private String userId;
     private String name;
+    private String ingredientType;
+    private String measurement;
     private LocalDate creationDate;
 
     @JsonIgnore
     @ManyToMany(
-            mappedBy = "dailyMenuEntities"
-    )
-    private List<PlannerEntity> plannerEntities;
-
-    @ManyToMany
-    @JoinTable(
-            name="daily_menu_meals",
-            joinColumns = @JoinColumn(name="daily_menu_id"),
-            inverseJoinColumns = @JoinColumn(name = "meal_id")
+            mappedBy = "mealIngredients"
     )
     private List<MealEntity> mealEntities;
 
-    public DailyMenuEntity(){
+    public IngredientEntity(){
 
     }
-    public DailyMenuEntity(String userId, String name, List<PlannerEntity> plannerEntities,
-                           List<MealEntity> mealEntities, LocalDate creationDate) {
+
+    public IngredientEntity(String name, String ingredientType, String measurement,
+                            LocalDate creationDate, List<MealEntity> mealEntities) {
         this.id = UUID.randomUUID().toString();
-        this.userId = userId;
         this.name = name;
-        this.plannerEntities = plannerEntities;
-        this.mealEntities = mealEntities;
+        this.ingredientType = ingredientType;
+        this.measurement = measurement;
         this.creationDate = creationDate;
+        this.mealEntities = mealEntities;
     }
 
     public String getId() {
@@ -53,14 +45,6 @@ public class DailyMenuEntity {
         this.id = id;
     }
 
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
-
     public String getName() {
         return name;
     }
@@ -69,12 +53,20 @@ public class DailyMenuEntity {
         this.name = name;
     }
 
-    public List<PlannerEntity> getPlannerEntities() {
-        return plannerEntities;
+    public String getIngredientType() {
+        return ingredientType;
     }
 
-    public void setPlannerEntities(List<PlannerEntity> plannerEntities) {
-        this.plannerEntities = plannerEntities;
+    public void setIngredientType(String ingredientType) {
+        this.ingredientType = ingredientType;
+    }
+
+    public String getMeasurement() {
+        return measurement;
+    }
+
+    public void setMeasurement(String measurement) {
+        this.measurement = measurement;
     }
 
     public LocalDate getCreationDate() {
