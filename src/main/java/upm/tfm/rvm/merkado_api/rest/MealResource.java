@@ -2,13 +2,10 @@ package upm.tfm.rvm.merkado_api.rest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import upm.tfm.rvm.merkado_api.data.DailyMenuEntity;
-import upm.tfm.rvm.merkado_api.data.IngredientEntity;
 import upm.tfm.rvm.merkado_api.data.MealEntity;
 import upm.tfm.rvm.merkado_api.data.MealIngredientEntity;
-import upm.tfm.rvm.merkado_api.rest.dtos.DailyMenu;
 import upm.tfm.rvm.merkado_api.rest.dtos.Meal;
-import upm.tfm.rvm.merkado_api.rest.dtos.MealIngredient;
+
 import upm.tfm.rvm.merkado_api.service.IngredientService;
 import upm.tfm.rvm.merkado_api.service.MealService;
 
@@ -43,7 +40,6 @@ public class MealResource {
 
     }
 
-    //TODO
     private List<MealIngredientEntity> getIngredientList(Meal meal){
         List<MealIngredientEntity> mealIngredientEntities
                 = new ArrayList<>();

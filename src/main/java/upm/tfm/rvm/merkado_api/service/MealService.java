@@ -2,8 +2,6 @@ package upm.tfm.rvm.merkado_api.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import upm.tfm.rvm.merkado_api.data.DailyMenuEntity;
-import upm.tfm.rvm.merkado_api.data.IngredientEntity;
 import upm.tfm.rvm.merkado_api.data.MealEntity;
 import upm.tfm.rvm.merkado_api.data.MealRepository;
 

@@ -36,5 +36,4 @@ public class PlannerService {
         }
     }
 
-    //TODO shopping list
 }

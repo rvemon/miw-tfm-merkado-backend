@@ -35,7 +35,6 @@ public class PlannerResource {
             @PathVariable String id
     ){
         Stream<PlannerEntity> pe= this.plannerService.findAllByUserId(id);
-        //List<PlannerEntity> pl = pe.collect(Collectors.toList());
         return pe.map(Planner::new).collect(Collectors.toList());
 
     }
