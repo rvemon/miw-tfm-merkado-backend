@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @RestController
-@RequestMapping
+@RequestMapping(MealResource.MEAL)
 public class MealResource {
     static final String MEAL = "/meals";
     static final String MEAL_BY_USERID = "/userid/{id}";

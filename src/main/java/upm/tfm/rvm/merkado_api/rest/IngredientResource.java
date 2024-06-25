@@ -11,6 +11,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @RestController
+@RequestMapping(IngredientResource.INGREDIENT)
 public class IngredientResource {
     static final String INGREDIENT = "/ingredients";
     static final String INGREDIENT_BY_USERID = "/userid/{id}";
