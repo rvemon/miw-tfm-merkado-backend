@@ -56,7 +56,7 @@ public class PlannerResource {
                         "descripcion planner 1", null, LocalDate.now());
 
         DailyMenuEntity dailyMenu = new DailyMenuEntity("1", "daily menu 2",
-                null, null, LocalDate.now());
+                null, null, LocalDate.now(), "MONDAY");
         plannerService.save(planner);
         dailyMenuService.save(dailyMenu);
         return "test";
