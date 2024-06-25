@@ -4,8 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import upm.tfm.rvm.merkado_api.data.DailyMenuEntity;
 import upm.tfm.rvm.merkado_api.data.DailyMenuRepository;
+import upm.tfm.rvm.merkado_api.data.PlannerEntity;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 @Service
 public class DailyMenuService {
@@ -28,6 +30,11 @@ public class DailyMenuService {
         return this.dailyMenuRepository.save(dailyMenu);
     }
 
+    public Stream<DailyMenuEntity> findAllByUserId(String userId) {
+        return this.dailyMenuRepository.findAll().stream()
+                .filter(dailyMenu -> userId.equals(dailyMenu.getUserId()));
+    }
+
     public void delete(String dailyMenuId){
         DailyMenuEntity dailyMenu = this.dailyMenuRepository.findById(dailyMenuId).orElse(null);
         if(dailyMenu!=null){
@@ -35,15 +42,4 @@ public class DailyMenuService {
         }
     }
 
-    public DailyMenuEntity update(DailyMenuEntity dailyMenuEntity){
-        DailyMenuEntity dailyMenu = this.dailyMenuRepository.findById(dailyMenuEntity.getId()).orElse(null);
-        if(dailyMenu!=null){
-            dailyMenu.setName(dailyMenuEntity.getName());
-            dailyMenu.setDay(dailyMenuEntity.getDay());
-            dailyMenu.setMealEntities(dailyMenuEntity.getMealEntities());
-            this.dailyMenuRepository.save(dailyMenu);
-            return dailyMenu;
-        }
-        return null;
-    }
 }

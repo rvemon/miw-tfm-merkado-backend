@@ -10,6 +10,8 @@ import java.util.List;
 
 public class Ingredient {
     private String id;
+
+    private String userId;
     private String name;
     private String ingredientType;
     private String measurement;
@@ -59,6 +61,14 @@ public class Ingredient {
 
     public LocalDate getCreationDate() {
         return creationDate;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public void setCreationDate(LocalDate creationDate) {

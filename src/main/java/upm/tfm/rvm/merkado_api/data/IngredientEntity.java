@@ -13,6 +13,8 @@ public class IngredientEntity {
 
     @Id
     private String id;
+
+    private String userId;
     private String name;
     private String ingredientType;
     private String measurement;
@@ -28,7 +30,7 @@ public class IngredientEntity {
 
     }
 
-    public IngredientEntity(String name, String ingredientType, String measurement,
+    public IngredientEntity(String userId, String name, String ingredientType, String measurement,
                             LocalDate creationDate, List<MealIngredientEntity> mealEntities) {
         this.id = UUID.randomUUID().toString();
         this.name = name;
@@ -36,6 +38,7 @@ public class IngredientEntity {
         this.measurement = measurement;
         this.creationDate = creationDate;
         this.mealEntities = mealEntities;
+        this.userId = userId;
     }
 
     public String getId() {
@@ -84,5 +87,13 @@ public class IngredientEntity {
 
     public void setMealEntities(List<MealIngredientEntity> mealEntities) {
         this.mealEntities = mealEntities;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 }
