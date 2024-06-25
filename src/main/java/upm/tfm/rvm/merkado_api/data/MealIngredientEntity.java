@@ -56,7 +56,7 @@ public class MealIngredientEntity {
 }
 
 @Embeddable
-public class MealIngredientId implements Serializable {
+class MealIngredientId implements Serializable {
 
     @Column(name = "meal_id")
     private String mealId;
