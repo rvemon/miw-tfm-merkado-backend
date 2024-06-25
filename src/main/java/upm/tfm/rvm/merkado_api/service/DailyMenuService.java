@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import upm.tfm.rvm.merkado_api.data.DailyMenuEntity;
 import upm.tfm.rvm.merkado_api.data.DailyMenuRepository;
-import upm.tfm.rvm.merkado_api.data.PlannerEntity;
 
 import java.util.List;
 import java.util.stream.Stream;

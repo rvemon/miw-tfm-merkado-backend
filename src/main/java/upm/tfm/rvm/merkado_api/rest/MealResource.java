@@ -40,7 +40,7 @@ public class MealResource {
 
     }
 
-    private List<MealIngredientEntity> getIngredientList(Meal meal){
+    private List<MealIngredientEntity> getIngredientList(){
         List<MealIngredientEntity> mealIngredientEntities
                 = new ArrayList<>();
 
@@ -56,7 +56,7 @@ public class MealResource {
                 meal.getCategory(),
                 LocalDate.now(),
                 null,
-                getIngredientList(meal)
+                getIngredientList()
         );
         return new Meal(this.mealService.save(mealEntity));
     }
@@ -76,7 +76,7 @@ public class MealResource {
         if(mealEntity!=null){
             mealEntity.setName(meal.getName());
             mealEntity.setCategory(meal.getCategory());
-            mealEntity.setMealIngredients(getIngredientList(meal));
+            mealEntity.setMealIngredients(getIngredientList());
         }
 
         this.mealService.save(mealEntity);
