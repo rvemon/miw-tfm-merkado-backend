@@ -1,12 +1,10 @@
 package upm.tfm.rvm.merkado_api.rest;
 
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import upm.tfm.rvm.merkado_api.data.DailyMenuEntity;
 import upm.tfm.rvm.merkado_api.data.PlannerEntity;
 import upm.tfm.rvm.merkado_api.rest.dtos.DailyMenu;
-import upm.tfm.rvm.merkado_api.rest.dtos.DailyMenuMeal;
 import upm.tfm.rvm.merkado_api.rest.dtos.Planner;
 import upm.tfm.rvm.merkado_api.rest.dtos.PlannerDailyMenu;
 import upm.tfm.rvm.merkado_api.service.DailyMenuService;

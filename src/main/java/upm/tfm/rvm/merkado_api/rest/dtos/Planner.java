@@ -1,6 +1,5 @@
 package upm.tfm.rvm.merkado_api.rest.dtos;
 
-import org.apache.tomcat.jni.Local;
 import org.springframework.beans.BeanUtils;
 import upm.tfm.rvm.merkado_api.data.PlannerEntity;
 

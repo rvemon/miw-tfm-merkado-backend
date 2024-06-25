@@ -2,7 +2,6 @@ package upm.tfm.rvm.merkado_api.data;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
