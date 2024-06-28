@@ -6,7 +6,7 @@ import upm.tfm.rvm.merkado_api.data.DailyMenuEntity;
 import upm.tfm.rvm.merkado_api.data.PlannerEntity;
 import upm.tfm.rvm.merkado_api.rest.dtos.DailyMenu;
 import upm.tfm.rvm.merkado_api.rest.dtos.Planner;
-import upm.tfm.rvm.merkado_api.rest.dtos.PlannerDailyMenu;
+import upm.tfm.rvm.merkado_api.rest.dtos.ShoppingItem;
 import upm.tfm.rvm.merkado_api.service.DailyMenuService;
 import upm.tfm.rvm.merkado_api.service.PlannerService;
 
@@ -20,6 +20,7 @@ import java.util.stream.Stream;
 public class PlannerResource {
     static final String PLANNERS = "/planners";
     static final String PLANNERS_BY_USERID = "/userid/{id}";
+    static final String PLANNER_SHOPPING = "/{id}/shopping-list";
     static final String ID_ID = "/{id}";
     private PlannerService plannerService;
     private DailyMenuService dailyMenuService;
@@ -37,6 +38,15 @@ public class PlannerResource {
         Stream<PlannerEntity> pe= this.plannerService.findAllByUserId(id);
         return pe.map(Planner::new).collect(Collectors.toList());
 
+    }
+
+    @GetMapping(PLANNER_SHOPPING)
+    public List<ShoppingItem> getShoppingList(@PathVariable String id){
+        PlannerEntity plannerEntity = this.plannerService.getOne(id);
+        if(plannerEntity!=null){
+            return new Planner(plannerEntity).getShopppingList();
+        }
+        return null;
     }
 
     private List<DailyMenuEntity> getDailyMenuList(Planner planner){
@@ -74,8 +84,10 @@ public class PlannerResource {
     }
 
     @PutMapping(ID_ID)
-    public Planner update(@RequestBody Planner planner){
-        PlannerEntity plannerEntity = this.plannerService.getOne(planner.getId());
+    public Planner update(
+            @PathVariable String id,
+            @RequestBody Planner planner){
+        PlannerEntity plannerEntity = this.plannerService.getOne(id);
         if(plannerEntity!=null){
             plannerEntity.setName(planner.getName());
             plannerEntity.setDescription(planner.getDescription());

@@ -7,6 +7,7 @@ import org.springframework.beans.BeanUtils;
 import upm.tfm.rvm.merkado_api.data.MealEntity;
 import upm.tfm.rvm.merkado_api.data.MealIngredientEntity;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -30,15 +31,21 @@ public class Meal {
         BeanUtils.copyProperties(mealEntity, this,
                 "menusIn", "ingredients");
         if(mealEntity.getMealIngredients()!=null){
-            /*this.setIngredients(mealEntity.getMealIngredients()
-                    .stream().map(MealIngredient::new)
-                    .collect(Collectors.toList()));*/
             List<MealIngredientEntity> mi = mealEntity.getMealIngredients();
             List<MealIngredient> miDTO = mi.stream().map(MealIngredient::new).collect(Collectors.toList());
             this.setIngredients(miDTO);
-            return;
         }
+    }
 
+    @JsonIgnore
+    public List<ShoppingItem> getShoppingList(){
+        List<ShoppingItem> shoppingList = new ArrayList<>();
+        for(MealIngredient mealIngredient : this.getIngredients()){
+            shoppingList.add(
+                    new ShoppingItem(mealIngredient.getIngredient(),mealIngredient.getQuantity())
+            );
+        }
+        return shoppingList;
     }
 
     public void setId(String id) {

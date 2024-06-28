@@ -6,6 +6,7 @@ import org.springframework.beans.BeanUtils;
 import upm.tfm.rvm.merkado_api.data.DailyMenuEntity;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -78,6 +79,30 @@ public class DailyMenu {
                 ", creationDate='" + creationDate + '\'' +
                 ", meals='" + meals +
                 '}';
+    }
+
+    @JsonIgnore
+    public List<ShoppingItem> getShoppingList(){
+        List<ShoppingItem> shoppingList = new ArrayList<>();
+        for(Meal meal: this.getMeals()){
+            shoppingList  = mergeList(shoppingList , meal.getShoppingList());
+        }
+        return shoppingList;
+    }
+
+    public List<ShoppingItem> mergeList(List<ShoppingItem> list1, List<ShoppingItem> list2){
+        for(ShoppingItem item: list2){
+                    ShoppingItem current = list1.stream()
+                            .filter(l -> l.getIngredient().getId()
+                                    .equals(item.getIngredient().getId())).findFirst().orElse(null);
+                    if(current != null){
+                        current.setQuantity(current.getQuantity()+item.getQuantity());
+                    }else{
+                        list1.add(item);
+                    }
+        }
+        return list1;
+
     }
 
 

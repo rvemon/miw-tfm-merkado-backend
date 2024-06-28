@@ -5,6 +5,7 @@ import org.springframework.beans.BeanUtils;
 import upm.tfm.rvm.merkado_api.data.PlannerEntity;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -65,6 +66,13 @@ public class Planner {
         this.description = description;
     }
 
+    public List<ShoppingItem> getShopppingList(){
+        List<ShoppingItem> shopppingList = new ArrayList<>();
+        for(DailyMenu menu: this.getDailyMenus()){
+            shopppingList = menu.mergeList(shopppingList,menu.getShoppingList());
+        }
+        return shopppingList;
+    }
     @Override
     public String toString() {
         return "{" +

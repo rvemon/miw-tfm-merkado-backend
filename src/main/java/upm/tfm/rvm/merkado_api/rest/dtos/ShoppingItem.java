@@ -1,37 +1,30 @@
 package upm.tfm.rvm.merkado_api.rest.dtos;
 
+import lombok.Getter;
+
+@Getter
 public class ShoppingItem {
-    String name;
-    String measurement;
-    String quantity;
+    Ingredient ingredient;
+    Integer quantity;
 
-    public ShoppingItem(String name, String measurement, String quantity) {
-        this.name = name;
-        this.measurement = measurement;
+    public ShoppingItem(Ingredient ingredient, Integer quantity) {
+        this.ingredient = ingredient;
         this.quantity = quantity;
     }
 
-    public String getName() {
-        return name;
+    public void setIngredient(Ingredient ingredient) {
+        this.ingredient = ingredient;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getMeasurement() {
-        return measurement;
-    }
-
-    public void setMeasurement(String measurement) {
-        this.measurement = measurement;
-    }
-
-    public String getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(String quantity) {
+    public void setQuantity(Integer quantity) {
         this.quantity = quantity;
+    }
+
+    @Override
+    public String toString() {
+        return "{" +
+                "ingredient=" + ingredient +
+                ", quantity=" + quantity +
+                '}';
     }
 }
