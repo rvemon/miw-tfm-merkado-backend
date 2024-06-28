@@ -1,11 +1,13 @@
 package upm.tfm.rvm.merkado_api.rest.dtos;
 
 import org.springframework.beans.BeanUtils;
+import upm.tfm.rvm.merkado_api.data.IngredientEntity;
+import upm.tfm.rvm.merkado_api.data.MealEntity;
 import upm.tfm.rvm.merkado_api.data.MealIngredientEntity;
 
 public class MealIngredient {
-    private String mealId;
-    private String ingredientId;
+    private Meal meal;
+    private Ingredient ingredient;
     private Integer quantity;
 
     public MealIngredient(){
@@ -16,36 +18,52 @@ public class MealIngredient {
         BeanUtils.copyProperties(mealIngredientEntity, this);
     }
 
-    public String getMealId() {
-        return mealId;
+    public MealIngredientEntity toEntity(){
+        MealIngredientEntity mealIngredient = new MealIngredientEntity();
+
+        MealEntity mealEntity = new MealEntity();
+        BeanUtils.copyProperties( this.meal, mealEntity, "ingredients", "menusIn");
+
+        IngredientEntity ingredientEntity = new IngredientEntity();
+        BeanUtils.copyProperties( this.ingredient, ingredientEntity, "mealsIn");
+
+        mealIngredient.setMeal(mealEntity);
+        mealIngredient.setIngredient(ingredientEntity);
+        mealIngredient.setQuantity(this.quantity);
+
+        return mealIngredient;
     }
 
-    public void setMealId(String mealId) {
-        this.mealId = mealId;
+
+    public Meal getMeal() {
+        return meal;
     }
 
-    public String getIngredientId() {
-        return ingredientId;
+    public void setMeal(Meal meal) {
+        this.meal = meal;
     }
 
-    public void setIngredientId(String ingredientId) {
-        this.ingredientId = ingredientId;
+    public Ingredient getIngredient() {
+        return ingredient;
+    }
+
+    public void setIngredient(Ingredient ingredient) {
+        this.ingredient = ingredient;
     }
 
     public Integer getQuantity() {
         return quantity;
     }
 
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
+    }
+
     @Override
     public String toString() {
         return "{" +
-                "mealId='" + mealId + '\'' +
-                ", ingredientId='" + ingredientId + '\'' +
+                "ingredient='" + ingredient + '\'' +
                 ", quantity=" + quantity +
                 '}';
-    }
-
-    public void setQuantity(Integer quantity) {
-        this.quantity = quantity;
     }
 }

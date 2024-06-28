@@ -32,9 +32,12 @@ public class DailyMenu {
                 dailyMenuEntity,
                 this,
                 "plannersIn", "meals");
-        this.setMeals(dailyMenuEntity.getMealEntities().stream()
-                .map(Meal::new)
-                .collect(Collectors.toList()));
+        if(dailyMenuEntity.getMealEntities() != null){
+            this.setMeals(dailyMenuEntity.getMealEntities().stream()
+                    .map(Meal::new)
+                    .collect(Collectors.toList()));
+        }
+
     }
 
     public void setId(String id) {

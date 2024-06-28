@@ -40,17 +40,19 @@ public class DailyMenuResource {
     }
 
     private List<MealEntity> getMealList(DailyMenu dailyMenu){
-        List<String> mealIds = dailyMenu.getMeals().stream()
-                .map(Meal::getId).collect(Collectors.toList());
+        if(dailyMenu.getMeals()!= null){
+            List<String> mealIds = dailyMenu.getMeals().stream()
+                    .map(Meal::getId).collect(Collectors.toList());
 
-        return this.mealService.findAll()
-                .stream().filter(d-> mealIds.contains(d.getId()))
-                .collect(Collectors.toList());
-
+            return this.mealService.findAll()
+                    .stream().filter(d-> mealIds.contains(d.getId()))
+                    .collect(Collectors.toList());
+        }
+        return null;
     }
 
     @PostMapping
-    public DailyMenu create(DailyMenu dailyMenu){
+    public DailyMenu create(@RequestBody DailyMenu dailyMenu){
         DailyMenuEntity dailyMenuEntity = new DailyMenuEntity(
                 dailyMenu.getUserId(),
                 dailyMenu.getName(),
@@ -71,9 +73,12 @@ public class DailyMenuResource {
         return null;
     }
 
-    @PutMapping
-    public DailyMenu update(DailyMenu dailyMenu){
-        DailyMenuEntity dailyMenuEntity = this.dailyMenuService.getOne(dailyMenu.getId());
+    @PutMapping(ID_ID)
+    public DailyMenu update(
+            @PathVariable String id,
+            @RequestBody DailyMenu dailyMenu
+    ){
+        DailyMenuEntity dailyMenuEntity = this.dailyMenuService.getOne(id);
         if(dailyMenuEntity!=null){
             dailyMenuEntity.setName(dailyMenu.getName());
             dailyMenuEntity.setDay(dailyMenu.getDay());
@@ -81,7 +86,7 @@ public class DailyMenuResource {
         }
 
         this.dailyMenuService.save(dailyMenuEntity);
-        return dailyMenu;
+        return new DailyMenu(dailyMenuEntity);
     }
 
     @DeleteMapping(ID_ID)

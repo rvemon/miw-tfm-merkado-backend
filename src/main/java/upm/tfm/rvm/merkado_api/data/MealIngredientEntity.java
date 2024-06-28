@@ -2,13 +2,16 @@ package upm.tfm.rvm.merkado_api.data;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.UUID;
 
 @Entity
 @Table(name="meal_ingredients")
 public class MealIngredientEntity {
 
+    @Id
     @EmbeddedId
     private MealIngredientId id;
+    /*private String id;*/
 
     @ManyToOne
     @MapsId("mealId")
@@ -22,13 +25,17 @@ public class MealIngredientEntity {
 
     private Integer quantity;
 
-    public MealIngredientId getId() {
+    /*public MealIngredientEntity(){
+        this.id = UUID.randomUUID().toString();
+    }
+
+    public String getId() {
         return id;
     }
 
-    public void setId(MealIngredientId id) {
+    public void setId(String id) {
         this.id = id;
-    }
+    }*/
 
     public MealEntity getMeal() {
         return meal;
@@ -80,3 +87,5 @@ class MealIngredientId implements Serializable {
         this.ingredientId = ingredientId;
     }
 }
+
+

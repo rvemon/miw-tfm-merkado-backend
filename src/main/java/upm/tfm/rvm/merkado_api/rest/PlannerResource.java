@@ -39,20 +39,21 @@ public class PlannerResource {
 
     }
 
-
-
     private List<DailyMenuEntity> getDailyMenuList(Planner planner){
-        List<String> dailyMenuIds = planner.getDailyMenus().stream()
-                .map(DailyMenu::getId).collect(Collectors.toList());
+        if(planner.getDailyMenus() != null){
+            List<String>  dailyMenuIds = planner.getDailyMenus().stream()
+                    .map(DailyMenu::getId).collect(Collectors.toList());
 
-        return this.dailyMenuService.findAll()
-                .stream().filter(d-> dailyMenuIds.contains(d.getId()))
-                .collect(Collectors.toList());
+            return this.dailyMenuService.findAll()
+                    .stream().filter(d-> dailyMenuIds.contains(d.getId()))
+                    .collect(Collectors.toList());
+        }
 
+        return null;
     }
 
     @PostMapping
-    public Planner create(Planner planner){
+    public Planner create(@RequestBody Planner planner){
         PlannerEntity plannerEntity = new PlannerEntity(
                 planner.getUserId(),
                 planner.getName(),
@@ -72,8 +73,8 @@ public class PlannerResource {
         return null;
     }
 
-    @PutMapping
-    public Planner update(Planner planner){
+    @PutMapping(ID_ID)
+    public Planner update(@RequestBody Planner planner){
         PlannerEntity plannerEntity = this.plannerService.getOne(planner.getId());
         if(plannerEntity!=null){
             plannerEntity.setName(planner.getName());
@@ -82,7 +83,7 @@ public class PlannerResource {
         }
 
         this.plannerService.save(plannerEntity);
-        return planner;
+        return new Planner(plannerEntity);
     }
 
     @DeleteMapping(ID_ID)
@@ -90,27 +91,5 @@ public class PlannerResource {
         this.plannerService.delete(id);
     }
 
-    @PostMapping("/set-planner-daily-menu")
-    public Planner addDailyMenu(
-            @RequestBody PlannerDailyMenu plannerDailyMenu
-            ){
-        PlannerEntity planner = plannerService.getOne(plannerDailyMenu.getPlannerId());
-        DailyMenuEntity dailyMenu = dailyMenuService.getOne(plannerDailyMenu.getDailyMenuId());
-        planner.addDailyMenu(dailyMenu);
-        return new Planner(plannerService.save(planner));
-    }
 
-    @GetMapping("/test")
-    public String test(){
-
-        PlannerEntity planner =
-                new PlannerEntity("1","planner 2",
-                        "descripcion planner 1", null, LocalDate.now());
-
-        DailyMenuEntity dailyMenu = new DailyMenuEntity("1", "daily menu 2",
-                null, null, LocalDate.now(), "MONDAY");
-        plannerService.save(planner);
-        dailyMenuService.save(dailyMenu);
-        return "test";
-    }
 }

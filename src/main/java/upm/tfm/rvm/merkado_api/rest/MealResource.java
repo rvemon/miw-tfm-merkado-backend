@@ -2,10 +2,14 @@ package upm.tfm.rvm.merkado_api.rest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import upm.tfm.rvm.merkado_api.data.IngredientEntity;
 import upm.tfm.rvm.merkado_api.data.MealEntity;
 import upm.tfm.rvm.merkado_api.data.MealIngredientEntity;
+import upm.tfm.rvm.merkado_api.data.MealIngredientRepository;
+import upm.tfm.rvm.merkado_api.rest.dtos.Ingredient;
 import upm.tfm.rvm.merkado_api.rest.dtos.Meal;
 
+import upm.tfm.rvm.merkado_api.rest.dtos.MealIngredient;
 import upm.tfm.rvm.merkado_api.service.IngredientService;
 import upm.tfm.rvm.merkado_api.service.MealService;
 
@@ -23,12 +27,10 @@ public class MealResource {
     static final String ID_ID = "/{id}";
 
     private MealService mealService;
-    private IngredientService ingredientService;
 
     @Autowired
-    public MealResource(MealService mealService, IngredientService ingredientService){
+    public MealResource(MealService mealService){
         this.mealService = mealService;
-        this.ingredientService = ingredientService;
     }
 
     @GetMapping(MEAL_BY_USERID)
@@ -40,23 +42,28 @@ public class MealResource {
 
     }
 
-    private List<MealIngredientEntity> getIngredientList(){
-        List<MealIngredientEntity> mealIngredientEntities
-                = new ArrayList<>();
-
-        return mealIngredientEntities;
-
+    private List<MealIngredientEntity> getIngredientList(Meal meal) {
+        if (meal.getIngredients() != null) {
+            return meal.getIngredients().stream().map(mi -> {
+                MealIngredientEntity mealIngredientEntity = new MealIngredientEntity();
+                mealIngredientEntity.setIngredient(new IngredientEntity());
+                mealIngredientEntity.getIngredient().setId(mi.getIngredient().getId());
+                mealIngredientEntity.setQuantity(mi.getQuantity());
+                return mealIngredientEntity;
+            }).collect(Collectors.toList());
+        }
+        return null;
     }
 
     @PostMapping
-    public Meal create(Meal meal){
+    public Meal create(@RequestBody Meal meal){
         MealEntity mealEntity = new MealEntity(
                 meal.getUserId(),
                 meal.getName(),
                 meal.getCategory(),
                 LocalDate.now(),
                 null,
-                getIngredientList()
+                getIngredientList(meal)
         );
         return new Meal(this.mealService.save(mealEntity));
     }
@@ -70,17 +77,25 @@ public class MealResource {
         return null;
     }
 
-    @PutMapping
-    public Meal update(Meal meal){
-        MealEntity mealEntity = this.mealService.getOne(meal.getId());
-        if(mealEntity!=null){
+    @PutMapping(ID_ID)
+    public Meal update(
+            @PathVariable String id,
+            @RequestBody Meal meal
+    ){
+        MealEntity mealEntity = this.mealService.getOne(id);
+        if (mealEntity != null) {
             mealEntity.setName(meal.getName());
             mealEntity.setCategory(meal.getCategory());
-            mealEntity.setMealIngredients(getIngredientList());
+            List<MealIngredientEntity> mealIngredients = getIngredientList(meal);
+            assert mealIngredients != null;
+            for (MealIngredientEntity mi : mealIngredients) {
+                mi.setMeal(mealEntity); // Asegura que la relación se establece correctamente
+            }
+            mealEntity.setMealIngredients(mealIngredients);
         }
 
         this.mealService.save(mealEntity);
-        return meal;
+        return new Meal(mealEntity);
     }
 
     @DeleteMapping(ID_ID)

@@ -26,9 +26,12 @@ public class Meal {
     public Meal(MealEntity mealEntity){
         BeanUtils.copyProperties(mealEntity, this,
                 "menusIn", "ingredients");
-        this.setIngredients(mealEntity.getMealIngredients()
-                .stream().map(MealIngredient::new)
-                .collect(Collectors.toList()));
+        if(mealEntity.getMealIngredients()!=null){
+            this.setIngredients(mealEntity.getMealIngredients()
+                    .stream().map(MealIngredient::new)
+                    .collect(Collectors.toList()));
+        }
+
     }
 
     public void setId(String id) {

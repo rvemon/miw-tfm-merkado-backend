@@ -3,9 +3,12 @@ package upm.tfm.rvm.merkado_api.rest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import upm.tfm.rvm.merkado_api.data.IngredientEntity;
+import upm.tfm.rvm.merkado_api.data.MealEntity;
 import upm.tfm.rvm.merkado_api.rest.dtos.Ingredient;
+import upm.tfm.rvm.merkado_api.rest.dtos.Meal;
 import upm.tfm.rvm.merkado_api.service.IngredientService;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -35,16 +38,30 @@ public class IngredientResource {
 
 
     @PostMapping
-    public Ingredient create(Ingredient ingredient){
+    public Ingredient create(@RequestBody Ingredient ingredient){
         IngredientEntity ingredientEntity = new IngredientEntity(
                 ingredient.getUserId(),
                 ingredient.getName(),
                 ingredient.getIngredientType(),
                 ingredient.getMeasurement(),
-                ingredient.getCreationDate(),
+                LocalDate.now(),
                 null
         );
         return new Ingredient(this.ingredientService.save(ingredientEntity));
+    }
+
+    @PutMapping(ID_ID)
+    public Ingredient update(@PathVariable String id,
+                             @RequestBody Ingredient ingredient){
+        IngredientEntity ingredientEntity = this.ingredientService.getOne(id);
+        if(ingredientEntity!=null){
+            ingredientEntity.setName(ingredient.getName());
+            ingredientEntity.setMeasurement(ingredient.getMeasurement());
+            ingredientEntity.setMeasurement(ingredient.getMeasurement());
+        }
+
+        this.ingredientService.save(ingredientEntity);
+        return new Ingredient(ingredientEntity);
     }
 
     @GetMapping(ID_ID)

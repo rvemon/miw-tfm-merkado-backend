@@ -32,11 +32,13 @@ public class Planner {
 
     public Planner(PlannerEntity plannerEntity){
         BeanUtils.copyProperties(plannerEntity, this, "dailyMenuEntities");
-        this.setDailyMenus(
-                plannerEntity.getDailyMenuEntities().stream()
-                        .map(DailyMenu::new)
-                        .collect(Collectors.toList())
-        );
+        if(plannerEntity.getDailyMenuEntities()!=null){
+            this.setDailyMenus(
+                    plannerEntity.getDailyMenuEntities().stream()
+                            .map(DailyMenu::new)
+                            .collect(Collectors.toList())
+            );
+        }
     }
 
     public void setDailyMenus(List<DailyMenu> dailyMenus){
