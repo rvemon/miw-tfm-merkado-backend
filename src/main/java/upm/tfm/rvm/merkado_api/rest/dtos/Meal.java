@@ -1,9 +1,11 @@
 package upm.tfm.rvm.merkado_api.rest.dtos;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;
 import org.springframework.beans.BeanUtils;
 import upm.tfm.rvm.merkado_api.data.MealEntity;
+import upm.tfm.rvm.merkado_api.data.MealIngredientEntity;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -17,6 +19,7 @@ public class Meal {
     @JsonIgnore
     private List<DailyMenu> menusIn;
 
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private List<MealIngredient> ingredients;
 
     public Meal(){
@@ -27,9 +30,13 @@ public class Meal {
         BeanUtils.copyProperties(mealEntity, this,
                 "menusIn", "ingredients");
         if(mealEntity.getMealIngredients()!=null){
-            this.setIngredients(mealEntity.getMealIngredients()
+            /*this.setIngredients(mealEntity.getMealIngredients()
                     .stream().map(MealIngredient::new)
-                    .collect(Collectors.toList()));
+                    .collect(Collectors.toList()));*/
+            List<MealIngredientEntity> mi = mealEntity.getMealIngredients();
+            List<MealIngredient> miDTO = mi.stream().map(MealIngredient::new).collect(Collectors.toList());
+            this.setIngredients(miDTO);
+            return;
         }
 
     }

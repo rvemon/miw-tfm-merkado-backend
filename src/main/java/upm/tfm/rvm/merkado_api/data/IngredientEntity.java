@@ -23,9 +23,7 @@ public class IngredientEntity {
     private LocalDate creationDate;
 
     @JsonIgnore
-    @OneToMany(
-            mappedBy = "ingredient"
-    )
+    @OneToMany(mappedBy = "ingredient")
     private List<MealIngredientEntity> mealEntities;
 
     public IngredientEntity(){

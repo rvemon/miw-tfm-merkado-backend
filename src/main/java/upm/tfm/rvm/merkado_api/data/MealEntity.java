@@ -26,9 +26,7 @@ public class MealEntity {
     )
     private List<DailyMenuEntity> dailyMenuEntities;
 
-    @OneToMany(
-            mappedBy = "meal"
-    )
+    @OneToMany(mappedBy = "meal")
     private List<MealIngredientEntity> mealIngredients;
 
 

@@ -44,15 +44,7 @@ public class MealResource {
 
     }
 
-    private List<MealIngredientEntity> getIngredientList(Meal meal){
-        if(meal.getIngredients()!=null){
-            return meal.getIngredients()
-                    .stream()
-                    .map(MealIngredient::toEntity)
-                    .collect(Collectors.toList());
-        }
-        return null;
-    }
+
 
     @PostMapping
     public Meal create(@RequestBody Meal meal){
@@ -61,17 +53,9 @@ public class MealResource {
                 meal.getName(),
                 meal.getCategory(),
                 LocalDate.now(),
-                null,null
+                null,
+                null
         );
-        this.mealService.save(mealEntity);
-        IngredientEntity ingredientEntity =
-                this.ingredientService.findAll().get(0);
-        MealIngredientEntity mealIngredient = new MealIngredientEntity();
-        mealIngredient.setMeal(mealEntity);
-        mealIngredient.setIngredient(ingredientEntity);
-        mealIngredient.setQuantity(2);
-        this.mealService.saveMealIngredient(mealIngredient);
-
         return new Meal(this.mealService.save(mealEntity));
     }
 
@@ -84,21 +68,54 @@ public class MealResource {
         return null;
     }
 
+    private List<MealIngredientEntity> getIngredientList(Meal meal, MealEntity mealEntity) {
+        if (meal.getIngredients() != null) {
+            return meal.getIngredients()
+                    .stream()
+                    .map(ingredientDto -> {
+                        MealIngredientEntity mealIngredientEntity = new MealIngredientEntity();
+                        mealIngredientEntity.setMeal(mealEntity);
+
+                        mealIngredientEntity.setId(ingredientDto.getId());
+
+                        IngredientEntity ingredientEntity = new IngredientEntity();
+                        ingredientEntity.setId(ingredientDto.getIngredient().getId());
+                        mealIngredientEntity.setIngredient(ingredientEntity);
+
+                        mealIngredientEntity.setQuantity(ingredientDto.getQuantity());
+                        return mealIngredientEntity;
+                    })
+                    .collect(Collectors.toList());
+        }
+        return null;
+    }
+
+
     @PutMapping(ID_ID)
     public Meal update(
             @PathVariable String id,
             @RequestBody Meal meal
-    ){
+    ) {
         MealEntity mealEntity = this.mealService.getOne(id);
-        if(mealEntity!=null){
+        if (mealEntity != null) {
             mealEntity.setName(meal.getName());
             mealEntity.setCategory(meal.getCategory());
-            mealEntity.setMealIngredients(getIngredientList(meal));
-        }
 
-        this.mealService.save(mealEntity);
+            // Obtener la lista de ingredientes
+            List<MealIngredientEntity> ingredients = getIngredientList(meal, mealEntity);
+            if (ingredients != null) {
+                for (MealIngredientEntity mealIngredient : ingredients) {
+                    this.mealService.saveMealIngredient(mealIngredient);
+                }
+            }
+
+            mealEntity.setMealIngredients(ingredients);
+
+            this.mealService.save(mealEntity);
+        }
         return new Meal(mealEntity);
     }
+
 
     @DeleteMapping(ID_ID)
     public void delete(@PathVariable String id){

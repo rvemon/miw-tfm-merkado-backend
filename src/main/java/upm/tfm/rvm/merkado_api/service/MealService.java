@@ -24,8 +24,8 @@ public class MealService {
         return this.mealRepository.findAll();
     }
 
-    public void saveMealIngredient(MealIngredientEntity mealIngredient){
-        this.mealIngredientRepository.save(mealIngredient);
+    public void saveMealIngredient(MealIngredientEntity mealIngredientEntity) {
+         this.mealIngredientRepository.save(mealIngredientEntity);
     }
 
     public Stream<MealEntity> findAllByUserId(String userId) {
