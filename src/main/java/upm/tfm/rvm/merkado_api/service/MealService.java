@@ -3,6 +3,8 @@ package upm.tfm.rvm.merkado_api.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import upm.tfm.rvm.merkado_api.data.MealEntity;
+import upm.tfm.rvm.merkado_api.data.MealIngredientEntity;
+import upm.tfm.rvm.merkado_api.data.MealIngredientRepository;
 import upm.tfm.rvm.merkado_api.data.MealRepository;
 
 import java.util.List;
@@ -11,13 +13,19 @@ import java.util.stream.Stream;
 @Service
 public class MealService {
     private MealRepository mealRepository;
+    private MealIngredientRepository mealIngredientRepository;
 
     @Autowired
-    public MealService(MealRepository mealRepository){
+    public MealService(MealRepository mealRepository, MealIngredientRepository mealIngredientRepository){
         this.mealRepository = mealRepository;
+        this.mealIngredientRepository = mealIngredientRepository;
     }
     public List<MealEntity> findAll(){
         return this.mealRepository.findAll();
+    }
+
+    public void saveMealIngredient(MealIngredientEntity mealIngredient){
+        this.mealIngredientRepository.save(mealIngredient);
     }
 
     public Stream<MealEntity> findAllByUserId(String userId) {

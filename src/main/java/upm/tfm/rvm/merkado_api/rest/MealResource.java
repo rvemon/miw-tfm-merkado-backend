@@ -27,10 +27,12 @@ public class MealResource {
     static final String ID_ID = "/{id}";
 
     private MealService mealService;
+    private IngredientService ingredientService;
 
     @Autowired
-    public MealResource(MealService mealService){
+    public MealResource(MealService mealService, IngredientService ingredientService){
         this.mealService = mealService;
+        this.ingredientService = ingredientService;
     }
 
     @GetMapping(MEAL_BY_USERID)
@@ -42,15 +44,12 @@ public class MealResource {
 
     }
 
-    private List<MealIngredientEntity> getIngredientList(Meal meal) {
-        if (meal.getIngredients() != null) {
-            return meal.getIngredients().stream().map(mi -> {
-                MealIngredientEntity mealIngredientEntity = new MealIngredientEntity();
-                mealIngredientEntity.setIngredient(new IngredientEntity());
-                mealIngredientEntity.getIngredient().setId(mi.getIngredient().getId());
-                mealIngredientEntity.setQuantity(mi.getQuantity());
-                return mealIngredientEntity;
-            }).collect(Collectors.toList());
+    private List<MealIngredientEntity> getIngredientList(Meal meal){
+        if(meal.getIngredients()!=null){
+            return meal.getIngredients()
+                    .stream()
+                    .map(MealIngredient::toEntity)
+                    .collect(Collectors.toList());
         }
         return null;
     }
@@ -62,9 +61,17 @@ public class MealResource {
                 meal.getName(),
                 meal.getCategory(),
                 LocalDate.now(),
-                null,
-                getIngredientList(meal)
+                null,null
         );
+        this.mealService.save(mealEntity);
+        IngredientEntity ingredientEntity =
+                this.ingredientService.findAll().get(0);
+        MealIngredientEntity mealIngredient = new MealIngredientEntity();
+        mealIngredient.setMeal(mealEntity);
+        mealIngredient.setIngredient(ingredientEntity);
+        mealIngredient.setQuantity(2);
+        this.mealService.saveMealIngredient(mealIngredient);
+
         return new Meal(this.mealService.save(mealEntity));
     }
 
@@ -83,15 +90,10 @@ public class MealResource {
             @RequestBody Meal meal
     ){
         MealEntity mealEntity = this.mealService.getOne(id);
-        if (mealEntity != null) {
+        if(mealEntity!=null){
             mealEntity.setName(meal.getName());
             mealEntity.setCategory(meal.getCategory());
-            List<MealIngredientEntity> mealIngredients = getIngredientList(meal);
-            assert mealIngredients != null;
-            for (MealIngredientEntity mi : mealIngredients) {
-                mi.setMeal(mealEntity); // Asegura que la relación se establece correctamente
-            }
-            mealEntity.setMealIngredients(mealIngredients);
+            mealEntity.setMealIngredients(getIngredientList(meal));
         }
 
         this.mealService.save(mealEntity);
