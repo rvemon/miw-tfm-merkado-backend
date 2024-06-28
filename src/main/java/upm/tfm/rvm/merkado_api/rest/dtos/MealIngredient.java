@@ -10,7 +10,7 @@ import upm.tfm.rvm.merkado_api.data.MealIngredientEntity;
 @Getter
 public class MealIngredient {
 
-    private Long id;
+    private String id;
 
     @JsonIgnore
     private Meal meal;

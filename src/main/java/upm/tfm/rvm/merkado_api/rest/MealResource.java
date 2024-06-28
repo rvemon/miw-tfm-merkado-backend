@@ -72,18 +72,13 @@ public class MealResource {
         if (meal.getIngredients() != null) {
             return meal.getIngredients()
                     .stream()
-                    .map(ingredientDto -> {
-                        MealIngredientEntity mealIngredientEntity = new MealIngredientEntity();
-                        mealIngredientEntity.setMeal(mealEntity);
-
-                        mealIngredientEntity.setId(ingredientDto.getId());
-
+                    .map(mealIngredient -> {
                         IngredientEntity ingredientEntity = new IngredientEntity();
-                        ingredientEntity.setId(ingredientDto.getIngredient().getId());
-                        mealIngredientEntity.setIngredient(ingredientEntity);
-
-                        mealIngredientEntity.setQuantity(ingredientDto.getQuantity());
-                        return mealIngredientEntity;
+                        ingredientEntity.setId(mealIngredient.getIngredient().getId());
+                        return new MealIngredientEntity(
+                                mealEntity,
+                                ingredientEntity,
+                                mealIngredient.getQuantity());
                     })
                     .collect(Collectors.toList());
         }
@@ -101,7 +96,6 @@ public class MealResource {
             mealEntity.setName(meal.getName());
             mealEntity.setCategory(meal.getCategory());
 
-            // Obtener la lista de ingredientes
             List<MealIngredientEntity> ingredients = getIngredientList(meal, mealEntity);
             if (ingredients != null) {
                 for (MealIngredientEntity mealIngredient : ingredients) {

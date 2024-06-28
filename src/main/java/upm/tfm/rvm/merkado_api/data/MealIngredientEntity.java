@@ -9,11 +9,11 @@ import java.util.UUID;
 
 @Getter
 @Entity
-@Table(name="meal_ingredient")
+@Table(name="meal_ingredients")
 public class MealIngredientEntity {
 
     @Id
-    private Long id;
+    private String id;
 
     @ManyToOne
     @JoinColumn(name = "meal_id")
@@ -29,14 +29,14 @@ public class MealIngredientEntity {
     }
 
 
-    public MealIngredientEntity(Long id, MealEntity meal, IngredientEntity ingredient, Integer quantity) {
-        this.id = id;
+    public MealIngredientEntity(MealEntity meal, IngredientEntity ingredient, Integer quantity) {
+        this.id = UUID.randomUUID().toString();
         this.meal = meal;
         this.ingredient = ingredient;
         this.quantity = quantity;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
