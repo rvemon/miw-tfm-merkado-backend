@@ -47,4 +47,11 @@ public class MealService {
             this.mealRepository.delete(meal);
         }
     }
+
+    public void deleteIngredient(String id) {
+        MealIngredientEntity mealIngredient = this.mealIngredientRepository.findById(id).orElse(null);
+        if(mealIngredient!=null){
+            this.mealIngredientRepository.delete(mealIngredient);
+        }
+    }
 }

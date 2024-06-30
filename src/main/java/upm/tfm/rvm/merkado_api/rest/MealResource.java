@@ -24,6 +24,7 @@ import java.util.stream.Stream;
 public class MealResource {
     static final String MEAL = "/meals";
     static final String MEAL_BY_USERID = "/userid/{id}";
+    static final String REMOVE_INGREDIENT = "/meal-ingredient/{id}";
     static final String ID_ID = "/{id}";
 
     private MealService mealService;
@@ -60,7 +61,7 @@ public class MealResource {
     }
 
     @GetMapping(ID_ID)
-    public  Meal getDailyMenuById(@PathVariable  String id){
+    public  Meal getMealById(@PathVariable  String id){
         MealEntity mealEntity= this.mealService.getOne(id);
         if(mealEntity!=null){
             return new Meal(mealEntity);
@@ -125,5 +126,10 @@ public class MealResource {
     @DeleteMapping(ID_ID)
     public void delete(@PathVariable String id){
         this.mealService.delete(id);
+    }
+
+    @DeleteMapping(REMOVE_INGREDIENT)
+    public void deleteIngredient(@PathVariable String id){
+        this.mealService.deleteIngredient(id);
     }
 }
