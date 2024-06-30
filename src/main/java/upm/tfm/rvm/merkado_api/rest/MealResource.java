@@ -73,12 +73,23 @@ public class MealResource {
             return meal.getIngredients()
                     .stream()
                     .map(mealIngredient -> {
-                        IngredientEntity ingredientEntity = new IngredientEntity();
-                        ingredientEntity.setId(mealIngredient.getIngredient().getId());
-                        return new MealIngredientEntity(
-                                mealEntity,
-                                ingredientEntity,
-                                mealIngredient.getQuantity());
+                        MealIngredientEntity existemie = mealEntity.getMealIngredients()
+                                .stream().filter(mi ->
+                                        mealIngredient.getId().equals(mi.getId()))
+                                .findFirst().orElse(null);
+                        if(existemie!= null){
+                            existemie.setQuantity(mealIngredient.getQuantity());
+                            return existemie;
+                        }
+                        else{
+                            IngredientEntity ingredientEntity = new IngredientEntity();
+                            ingredientEntity.setId(mealIngredient.getIngredient().getId());
+                            return new MealIngredientEntity(
+                                    mealEntity,
+                                    ingredientEntity,
+                                    mealIngredient.getQuantity());
+                        }
+
                     })
                     .collect(Collectors.toList());
         }

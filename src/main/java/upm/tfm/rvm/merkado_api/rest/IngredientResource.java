@@ -56,7 +56,7 @@ public class IngredientResource {
         IngredientEntity ingredientEntity = this.ingredientService.getOne(id);
         if(ingredientEntity!=null){
             ingredientEntity.setName(ingredient.getName());
-            ingredientEntity.setMeasurement(ingredient.getMeasurement());
+            ingredientEntity.setIngredientType(ingredient.getIngredientType());
             ingredientEntity.setMeasurement(ingredient.getMeasurement());
         }
 
