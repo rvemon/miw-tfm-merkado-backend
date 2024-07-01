@@ -30,6 +30,10 @@ public class IngredientService {
         return this.ingredientRepository.getOne(id);
     }
 
+    public void deleteAll(){
+        this.ingredientRepository.deleteAll();
+    }
+
     public IngredientEntity save(IngredientEntity ingredient) {
         return this.ingredientRepository.save(ingredient);
     }

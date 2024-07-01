@@ -24,6 +24,11 @@ public class MealService {
         return this.mealRepository.findAll();
     }
 
+    public void deleteAll(){
+        this.mealIngredientRepository.deleteAll();
+        this.mealRepository.deleteAll();
+    }
+
     public void saveMealIngredient(MealIngredientEntity mealIngredientEntity) {
          this.mealIngredientRepository.save(mealIngredientEntity);
     }
